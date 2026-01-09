@@ -49,16 +49,16 @@ const ProfilePage = () => {
             )}
             <div className="bookings-section">
                 <h3>My Booking History</h3>
-                <div className="booking-list">
+                <div className="rental-list">
                     {user && user.bookings.length > 0 ? (
-                        user.bookings.map((booking) => (
-                            <div key={booking.id} className="booking-item">
-                                <p><strong>Booking Code:</strong> {booking.bookingConfirmationCode}</p>
-                                <p><strong>Check-in Date:</strong> {booking.checkInDate}</p>
-                                <p><strong>Check-out Date:</strong> {booking.checkOutDate}</p>
-                                <p><strong>Total Guests:</strong> {booking.totalNumOfGuest}</p>
-                                <p><strong>Room Type:</strong> {booking.room.roomType}</p>
-                                <img src={booking.room.roomPhotoUrl} alt="Room" className="room-photo" />
+                        user.bookings.map((rental) => (
+                            <div key={rental.id} className="rental-item">
+                                <p><strong>Booking Code:</strong> {rental.bookingConfirmationCode}</p>
+                                <p><strong>Check-in Date:</strong> {rental.checkInDate}</p>
+                                <p><strong>Check-out Date:</strong> {rental.checkOutDate}</p>
+                                <p><strong>Total Guests:</strong> {rental.totalNumOfGuest}</p>
+                                <p><strong>Room Type:</strong> {rental.equipment.roomType}</p>
+                                <img src={rental.equipment.roomPhotoUrl} alt="Room" className="equipment-photo" />
                             </div>
                         ))
                     ) : (

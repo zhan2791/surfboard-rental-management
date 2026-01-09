@@ -24,7 +24,7 @@ function Navbar() {
             <ul className="navbar-ul">
                 <li><NavLink to="/home" activeclassname="active">Home</NavLink></li>
                 <li><NavLink to="/rooms" activeclassname="active">Rooms</NavLink></li>
-                <li><NavLink to="/find-booking" activeclassname="active">Find my Booking</NavLink></li>
+                <li><NavLink to="/find-rental" activeclassname="active">Find my Booking</NavLink></li>
 
                 {isUser && <li><NavLink to="/profile" activeclassname="active">Profile</NavLink></li>}
                 {isAdmin && <li><NavLink to="/admin" activeclassname="active">Admin</NavLink></li>}

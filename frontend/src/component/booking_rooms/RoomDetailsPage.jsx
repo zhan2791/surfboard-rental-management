@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker';
 
 const RoomDetailsPage = () => {
   const navigate = useNavigate(); // Access the navigate function to navigate
-  const { roomId } = useParams(); // Get room ID from URL parameters
+  const { roomId } = useParams(); // Get equipment ID from URL parameters
   const [roomDetails, setRoomDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // Track loading state
   const [error, setError] = useState(null); // Track any errors
@@ -14,12 +14,12 @@ const RoomDetailsPage = () => {
   const [checkOutDate, setCheckOutDate] = useState(null); // State variable for check-out date
   const [numAdults, setNumAdults] = useState(1); // State variable for number of adults
   const [numChildren, setNumChildren] = useState(0); // State variable for number of children
-  const [totalPrice, setTotalPrice] = useState(0); // State variable for total booking price
+  const [totalPrice, setTotalPrice] = useState(0); // State variable for total rental price
   const [totalGuests, setTotalGuests] = useState(1); // State variable for total number of guests
   const [showDatePicker, setShowDatePicker] = useState(false); // State variable to control date picker visibility
   const [userId, setUserId] = useState(''); // Set user id
   const [showMessage, setShowMessage] = useState(false); // State variable to control message visibility
-  const [confirmationCode, setConfirmationCode] = useState(''); // State variable for booking confirmation code
+  const [confirmationCode, setConfirmationCode] = useState(''); // State variable for rental confirmation code
   const [errorMessage, setErrorMessage] = useState(''); // State variable for error message
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const RoomDetailsPage = () => {
       try {
         setIsLoading(true); // Set loading state to true
         const response = await ApiService.getRoomById(roomId);
-        setRoomDetails(response.room);
+        setRoomDetails(response.equipment);
         const userProfile = await ApiService.getUserProfile();
         setUserId(userProfile.user.id);
       } catch (error) {
@@ -92,20 +92,20 @@ const RoomDetailsPage = () => {
       console.log("Formated Check-in Date:", formattedCheckInDate);
       console.log("Formated Check-out Date:", formattedCheckOutDate);
 
-      // Create booking object
-      const booking = {
+      // Create rental object
+      const rental = {
         checkInDate: formattedCheckInDate,
         checkOutDate: formattedCheckOutDate,
         numOfAdults: numAdults,
         numOfChildren: numChildren
       };
-      console.log(booking)
+      console.log(rental)
       console.log(checkOutDate)
 
-      // Make booking
-      const response = await ApiService.bookRoom(roomId, userId, booking);
+      // Make rental
+      const response = await ApiService.bookRoom(roomId, userId, rental);
       if (response.statusCode === 200) {
-        setConfirmationCode(response.bookingConfirmationCode); // Set booking confirmation code
+        setConfirmationCode(response.bookingConfirmationCode); // Set rental confirmation code
         setShowMessage(true); // Show message
         // Hide message and navigate to homepage after 5 seconds
         setTimeout(() => {
@@ -120,24 +120,24 @@ const RoomDetailsPage = () => {
   };
 
   if (isLoading) {
-    return <p className='room-detail-loading'>Loading room details...</p>;
+    return <p className='equipment-detail-loading'>Loading equipment details...</p>;
   }
 
   if (error) {
-    return <p className='room-detail-loading'>{error}</p>;
+    return <p className='equipment-detail-loading'>{error}</p>;
   }
 
   if (!roomDetails) {
-    return <p className='room-detail-loading'>Room not found.</p>;
+    return <p className='equipment-detail-loading'>Room not found.</p>;
   }
 
   const { roomType, roomPrice, roomPhotoUrl, description, bookings } = roomDetails;
 
   return (
-    <div className="room-details-booking">
+    <div className="equipment-details-rental">
       {showMessage && (
-        <p className="booking-success-message">
-          Booking successful! Confirmation code: {confirmationCode}. An SMS and email of your booking details have been sent to you.
+        <p className="rental-success-message">
+          Booking successful! Confirmation code: {confirmationCode}. An SMS and email of your rental details have been sent to you.
         </p>
       )}
       {errorMessage && (
@@ -147,8 +147,8 @@ const RoomDetailsPage = () => {
       )}
       <h2>Room Details</h2>
       <br />
-      <img src={roomPhotoUrl} alt={roomType} className="room-details-image" />
-      <div className="room-details-info">
+      <img src={roomPhotoUrl} alt={roomType} className="equipment-details-image" />
+      <div className="equipment-details-info">
         <h3>{roomType}</h3>
         <p>Price: ${roomPrice} / night</p>
         <p>{description}</p>
@@ -156,18 +156,18 @@ const RoomDetailsPage = () => {
       {bookings && bookings.length > 0 && (
         <div>
           <h3>Existing Booking Details</h3>
-          <ul className="booking-list">
-            {bookings.map((booking, index) => (
-              <li key={booking.id} className="booking-item">
-                <span className="booking-number">Booking {index + 1} </span>
-                <span className="booking-text">Check-in: {booking.checkInDate} </span>
-                <span className="booking-text">Out: {booking.checkOutDate}</span>
+          <ul className="rental-list">
+            {bookings.map((rental, index) => (
+              <li key={rental.id} className="rental-item">
+                <span className="rental-number">Booking {index + 1} </span>
+                <span className="rental-text">Check-in: {rental.checkInDate} </span>
+                <span className="rental-text">Out: {rental.checkOutDate}</span>
               </li>
             ))}
           </ul>
         </div>
       )}
-      <div className="booking-info">
+      <div className="rental-info">
         <button className="book-now-button" onClick={() => setShowDatePicker(true)}>Book Now</button>
         <button className="go-back-button" onClick={() => setShowDatePicker(false)}>Go Back</button>
         {showDatePicker && (
@@ -215,7 +215,7 @@ const RoomDetailsPage = () => {
                   onChange={(e) => setNumChildren(parseInt(e.target.value))}
                 />
               </div>
-              <button className="confirm-booking" onClick={handleConfirmBooking}>Confirm Booking</button>
+              <button className="confirm-rental" onClick={handleConfirmBooking}>Confirm Booking</button>
             </div>
           </div>
         )}
@@ -223,7 +223,7 @@ const RoomDetailsPage = () => {
           <div className="total-price">
             <p>Total Price: ${totalPrice}</p>
             <p>Total Guests: {totalGuests}</p>
-            <button onClick={acceptBooking} className="accept-booking">Accept Booking</button>
+            <button onClick={acceptBooking} className="accept-rental">Accept Booking</button>
           </div>
         )}
       </div>

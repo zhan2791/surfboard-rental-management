@@ -3,19 +3,19 @@ import ApiService from '../../service/ApiService'; // Assuming your service is i
 
 const FindBookingPage = () => {
     const [confirmationCode, setConfirmationCode] = useState(''); // State variable for confirmation code
-    const [bookingDetails, setBookingDetails] = useState(null); // State variable for booking details
+    const [bookingDetails, setBookingDetails] = useState(null); // State variable for rental details
     const [error, setError] = useState(null); // Track any errors
 
     const handleSearch = async () => {
         if (!confirmationCode.trim()) {
-            setError("Please Enter a booking confirmation code");
+            setError("Please Enter a rental confirmation code");
             setTimeout(() => setError(''), 5000);
             return;
         }
         try {
-            // Call API to get booking details
+            // Call API to get rental details
             const response = await ApiService.getBookingByConfirmationCode(confirmationCode);
-            setBookingDetails(response.booking);
+            setBookingDetails(response.rental);
             setError(null); // Clear error if successful
         } catch (error) {
             setError(error.response?.data?.message || error.message);
@@ -24,13 +24,13 @@ const FindBookingPage = () => {
     };
 
     return (
-        <div className="find-booking-page">
+        <div className="find-rental-page">
             <h2>Find Booking</h2>
             <div className="search-container">
                 <input
                     required
                     type="text"
-                    placeholder="Enter your booking confirmation code"
+                    placeholder="Enter your rental confirmation code"
                     value={confirmationCode}
                     onChange={(e) => setConfirmationCode(e.target.value)}
                 />
@@ -38,7 +38,7 @@ const FindBookingPage = () => {
             </div>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {bookingDetails && (
-                <div className="booking-details">
+                <div className="rental-details">
                     <h3>Booking Details</h3>
                     <p>Confirmation Code: {bookingDetails.bookingConfirmationCode}</p>
                     <p>Check-in Date: {bookingDetails.checkInDate}</p>

@@ -5,7 +5,7 @@ import ApiService from '../../service/ApiService'; // Assuming your service is i
 const EditBookingPage = () => {
     const navigate = useNavigate();
     const { bookingCode } = useParams();
-    const [bookingDetails, setBookingDetails] = useState(null); // State variable for booking details
+    const [bookingDetails, setBookingDetails] = useState(null); // State variable for rental details
     const [error, setError] = useState(null); // Track any errors
     const [success, setSuccessMessage] = useState(null); // Track any errors
 
@@ -15,7 +15,7 @@ const EditBookingPage = () => {
         const fetchBookingDetails = async () => {
             try {
                 const response = await ApiService.getBookingByConfirmationCode(bookingCode);
-                setBookingDetails(response.booking);
+                setBookingDetails(response.rental);
             } catch (error) {
                 setError(error.message);
             }
@@ -26,7 +26,7 @@ const EditBookingPage = () => {
 
 
     const acheiveBooking = async (bookingId) => {
-        if (!window.confirm('Are you sure you want to Acheive this booking?')) {
+        if (!window.confirm('Are you sure you want to Acheive this rental?')) {
             return; // Do nothing if the user cancels
         }
 
@@ -47,12 +47,12 @@ const EditBookingPage = () => {
     };
 
     return (
-        <div className="find-booking-page">
+        <div className="find-rental-page">
             <h2>Booking Detail</h2>
             {error && <p className='error-message'>{error}</p>}
             {success && <p className='success-message'>{success}</p>}
             {bookingDetails && (
-                <div className="booking-details">
+                <div className="rental-details">
                     <h3>Booking Details</h3>
                     <p>Confirmation Code: {bookingDetails.bookingConfirmationCode}</p>
                     <p>Check-in Date: {bookingDetails.checkInDate}</p>
@@ -82,7 +82,7 @@ const EditBookingPage = () => {
                         <img src={bookingDetails.room.roomPhotoUrl} alt="" sizes="" srcSet="" />
                     </div>
                     <button
-                        className="acheive-booking"
+                        className="acheive-rental"
                         onClick={() => acheiveBooking(bookingDetails.id)}>Acheive Booking
                     </button>
                 </div>

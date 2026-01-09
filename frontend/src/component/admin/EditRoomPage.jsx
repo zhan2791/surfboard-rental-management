@@ -21,10 +21,10 @@ const EditRoomPage = () => {
             try {
                 const response = await ApiService.getRoomById(roomId);
                 setRoomDetails({
-                    roomPhotoUrl: response.room.roomPhotoUrl,
-                    roomType: response.room.roomType,
-                    roomPrice: response.room.roomPrice,
-                    roomDescription: response.room.roomDescription,
+                    roomPhotoUrl: response.equipment.roomPhotoUrl,
+                    roomType: response.equipment.roomType,
+                    roomPrice: response.equipment.roomPrice,
+                    roomDescription: response.equipment.roomDescription,
                 });
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
@@ -81,7 +81,7 @@ const EditRoomPage = () => {
     };
 
     const handleDelete = async () => {
-        if (window.confirm('Do you want to delete this room?')) {
+        if (window.confirm('Do you want to delete this equipment?')) {
             try {
                 const result = await ApiService.deleteRoom(roomId);
                 if (result.statusCode === 200) {
@@ -100,17 +100,17 @@ const EditRoomPage = () => {
     };
 
     return (
-        <div className="edit-room-container">
+        <div className="edit-equipment-container">
             <h2>Edit Room</h2>
             {error && <p className="error-message">{error}</p>}
             {success && <p className="success-message">{success}</p>}
-            <div className="edit-room-form">
+            <div className="edit-equipment-form">
                 <div className="form-group">
                     {preview ? (
-                        <img src={preview} alt="Room Preview" className="room-photo-preview" />
+                        <img src={preview} alt="Room Preview" className="equipment-photo-preview" />
                     ) : (
                         roomDetails.roomPhotoUrl && (
-                            <img src={roomDetails.roomPhotoUrl} alt="Room" className="room-photo" />
+                            <img src={roomDetails.roomPhotoUrl} alt="Room" className="equipment-photo" />
                         )
                     )}
                     <input

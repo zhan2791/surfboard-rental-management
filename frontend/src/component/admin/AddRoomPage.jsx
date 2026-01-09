@@ -25,7 +25,7 @@ const AddRoomPage = () => {
                 const types = await ApiService.getRoomTypes();
                 setRoomTypes(types);
             } catch (error) {
-                console.error('Error fetching room types:', error.message);
+                console.error('Error fetching equipment types:', error.message);
             }
         };
         fetchRoomTypes();
@@ -67,12 +67,12 @@ const AddRoomPage = () => {
 
     const addRoom = async () => {
         if (!roomDetails.roomType || !roomDetails.roomPrice || !roomDetails.roomDescription) {
-            setError('All room details must be provided.');
+            setError('All equipment details must be provided.');
             setTimeout(() => setError(''), 5000);
             return;
         }
 
-        if (!window.confirm('Do you want to add this room?')) {
+        if (!window.confirm('Do you want to add this equipment?')) {
             return
         }
 
@@ -102,14 +102,14 @@ const AddRoomPage = () => {
     };
 
     return (
-        <div className="edit-room-container">
+        <div className="edit-equipment-container">
             <h2>Add New Room</h2>
             {error && <p className="error-message">{error}</p>}
             {success && <p className="success-message">{success}</p>}
-            <div className="edit-room-form">
+            <div className="edit-equipment-form">
                 <div className="form-group">
                     {preview && (
-                        <img src={preview} alt="Room Preview" className="room-photo-preview" />
+                        <img src={preview} alt="Room Preview" className="equipment-photo-preview" />
                     )}
                     <input
                         type="file"
@@ -121,7 +121,7 @@ const AddRoomPage = () => {
                 <div className="form-group">
                     <label>Room Type</label>
                     <select value={roomDetails.roomType} onChange={handleRoomTypeChange}>
-                        <option value="">Select a room type</option>
+                        <option value="">Select a equipment type</option>
                         {roomTypes.map(type => (
                             <option key={type} value={type}>{type}</option>
                         ))}
@@ -131,7 +131,7 @@ const AddRoomPage = () => {
                         <input
                             type="text"
                             name="roomType"
-                            placeholder="Enter new room type"
+                            placeholder="Enter new equipment type"
                             value={roomDetails.roomType}
                             onChange={handleChange}
                         />

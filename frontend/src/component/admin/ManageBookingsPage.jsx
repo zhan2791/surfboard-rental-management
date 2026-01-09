@@ -34,8 +34,8 @@ const ManageBookingsPage = () => {
         if (term === '') {
             setFilteredBookings(bookings);
         } else {
-            const filtered = bookings.filter((booking) =>
-                booking.bookingConfirmationCode && booking.bookingConfirmationCode.toLowerCase().includes(term.toLowerCase())
+            const filtered = bookings.filter((rental) =>
+                rental.bookingConfirmationCode && rental.bookingConfirmationCode.toLowerCase().includes(term.toLowerCase())
             );
             setFilteredBookings(filtered);
         }
@@ -61,20 +61,20 @@ const ManageBookingsPage = () => {
                     type="text"
                     value={searchTerm}
                     onChange={handleSearchChange}
-                    placeholder="Enter booking number"
+                    placeholder="Enter rental number"
                 />
             </div>
 
-            <div className="booking-results">
-                {currentBookings.map((booking) => (
-                    <div key={booking.id} className="booking-result-item">
-                        <p><strong>Booking Code:</strong> {booking.bookingConfirmationCode}</p>
-                        <p><strong>Check In Date:</strong> {booking.checkInDate}</p>
-                        <p><strong>Check out Date:</strong> {booking.checkOutDate}</p>
-                        <p><strong>Total Guests:</strong> {booking.totalNumOfGuest}</p>
+            <div className="rental-results">
+                {currentBookings.map((rental) => (
+                    <div key={rental.id} className="rental-result-item">
+                        <p><strong>Booking Code:</strong> {rental.bookingConfirmationCode}</p>
+                        <p><strong>Check In Date:</strong> {rental.checkInDate}</p>
+                        <p><strong>Check out Date:</strong> {rental.checkOutDate}</p>
+                        <p><strong>Total Guests:</strong> {rental.totalNumOfGuest}</p>
                         <button
-                            className="edit-room-button"
-                            onClick={() => navigate(`/admin/edit-booking/${booking.bookingConfirmationCode}`)}
+                            className="edit-equipment-button"
+                            onClick={() => navigate(`/admin/edit-rental/${rental.bookingConfirmationCode}`)}
                         >Manage Booking</button>
                     </div>
                 ))}

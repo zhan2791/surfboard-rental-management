@@ -33,10 +33,10 @@ function App() {
             <Route exact path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/rooms" element={<AllRoomsPage />} />
-            <Route path="/find-booking" element={<FindBookingPage />} />
+            <Route path="/find-rental" element={<FindBookingPage />} />
 
             {/* Protected Routes */}
-            <Route path="/room-details-book/:roomId"
+            <Route path="/equipment-details-book/:roomId"
               element={<ProtectedRoute element={<RoomDetailsBookingPage />} />}
             />
             <Route path="/profile"
@@ -53,16 +53,16 @@ function App() {
             <Route path="/admin/manage-rooms"
               element={<AdminRoute element={<ManageRoomPage />} />}
             />
-            <Route path="/admin/edit-room/:roomId"
+            <Route path="/admin/edit-equipment/:roomId"
               element={<AdminRoute element={<EditRoomPage />} />}
             />
-            <Route path="/admin/add-room"
+            <Route path="/admin/add-equipment"
               element={<AdminRoute element={<AddRoomPage />} />}
             />
             <Route path="/admin/manage-bookings"
               element={<AdminRoute element={<ManageBookingsPage />} />}
             />
-            <Route path="/admin/edit-booking/:bookingCode"
+            <Route path="/admin/edit-rental/:bookingCode"
               element={<AdminRoute element={<EditBookingPage />} />}
             />
 

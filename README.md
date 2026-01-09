@@ -1,2 +1,2 @@
-# phegon-hotel-booking-and-management
-A Hotel booking and management platform
+# phegon-hotel-rental-and-management
+A Hotel rental and management platform

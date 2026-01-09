@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 
 const BookingResult = ({ bookingSearchResults }) => {
   return (
-    <div className="booking-results">
-      {bookingSearchResults.map((booking) => (
-        <div key={booking.id} className="booking-result-item">
-          <p>Room ID: {booking.roomId}</p>
-          <p>User ID: {booking.userId}</p>
-          <p>Start Date: {booking.startDate}</p>
-          <p>End Date: {booking.endDate}</p>
-          <p>Status: {booking.status}</p>
-          <Link to={`/admin/edit-booking/${booking.id}`} className="edit-link">Edit</Link>
+    <div className="rental-results">
+      {bookingSearchResults.map((rental) => (
+        <div key={rental.id} className="rental-result-item">
+          <p>Room ID: {rental.roomId}</p>
+          <p>User ID: {rental.userId}</p>
+          <p>Start Date: {rental.startDate}</p>
+          <p>End Date: {rental.endDate}</p>
+          <p>Status: {rental.status}</p>
+          <Link to={`/admin/edit-rental/${rental.id}`} className="edit-link">Edit</Link>
         </div>
       ))}
     </div>

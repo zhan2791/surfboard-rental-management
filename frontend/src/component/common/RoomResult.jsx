@@ -6,30 +6,30 @@ const RoomResult = ({ roomSearchResults }) => {
     const navigate = useNavigate(); // Initialize useNavigate hook
     const isAdmin = ApiService.isAdmin();
     return (
-        <section className="room-results">
+        <section className="equipment-results">
             {roomSearchResults && roomSearchResults.length > 0 && (
-                <div className="room-list">
-                    {roomSearchResults.map(room => (
-                        <div key={room.id} className="room-list-item">
-                            <img className='room-list-item-image' src={room.roomPhotoUrl} alt={room.roomType} />
-                            <div className="room-details">
-                                <h3>{room.roomType}</h3>
-                                <p>Price: ${room.roomPrice} / night</p>
-                                <p>Description: {room.roomDescription}</p>
+                <div className="equipment-list">
+                    {roomSearchResults.map(equipment => (
+                        <div key={equipment.id} className="equipment-list-item">
+                            <img className='equipment-list-item-image' src={equipment.roomPhotoUrl} alt={equipment.roomType} />
+                            <div className="equipment-details">
+                                <h3>{equipment.roomType}</h3>
+                                <p>Price: ${equipment.roomPrice} / night</p>
+                                <p>Description: {equipment.roomDescription}</p>
                             </div>
 
                             <div className='book-now-div'>
                                 {isAdmin ? (
                                     <button
-                                        className="edit-room-button"
-                                        onClick={() => navigate(`/admin/edit-room/${room.id}`)} // Navigate to edit room with room ID
+                                        className="edit-equipment-button"
+                                        onClick={() => navigate(`/admin/edit-equipment/${equipment.id}`)} // Navigate to edit equipment with equipment ID
                                     >
                                         Edit Room
                                     </button>
                                 ) : (
                                     <button
                                         className="book-now-button"
-                                        onClick={() => navigate(`/room-details-book/${room.id}`)} // Navigate to book room with room ID
+                                        onClick={() => navigate(`/equipment-details-book/${equipment.id}`)} // Navigate to book equipment with equipment ID
                                     >
                                         View/Book Now
                                     </button>

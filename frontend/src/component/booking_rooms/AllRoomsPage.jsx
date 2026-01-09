@@ -38,7 +38,7 @@ const AllRoomsPage = () => {
         const types = await ApiService.getRoomTypes();
         setRoomTypes(types);
       } catch (error) {
-        console.error('Error fetching room types:', error.message);
+        console.error('Error fetching equipment types:', error.message);
       }
     };
 
@@ -55,7 +55,7 @@ const AllRoomsPage = () => {
     if (type === '') {
       setFilteredRooms(rooms);
     } else {
-      const filtered = rooms.filter((room) => room.roomType === type);
+      const filtered = rooms.filter((equipment) => equipment.roomType === type);
       setFilteredRooms(filtered);
     }
     setCurrentPage(1); // Reset to first page after filtering
@@ -72,7 +72,7 @@ const AllRoomsPage = () => {
   return (
     <div className='all-rooms'>
       <h2>All Rooms</h2>
-      <div className='all-room-filter-div'>
+      <div className='all-equipment-filter-div'>
         <label>Filter by Room Type:</label>
         <select value={selectedRoomType} onChange={handleRoomTypeChange}>
           <option value="">All</option>
