@@ -45,7 +45,7 @@ export default class ApiService {
     }
 
 
-    /* This is the  to get a single user */
+    /* This is to get a single user */
     static async getUser(userId) {
         const response = await axios.get(`${this.BASE_URL}/users/get-by-id/${userId}`, {
             headers: this.getHeader()
@@ -53,9 +53,9 @@ export default class ApiService {
         return response.data
     }
 
-    /* This is the  to get user bookings by the user id */
-    static async getUserBookings(userId) {
-        const response = await axios.get(`${this.BASE_URL}/users/get-user-bookings/${userId}`, {
+    /* This is the  to get user rentals by the user id */
+    static async getUserRentals(userId) {
+        const response = await axios.get(`${this.BASE_URL}/users/get-user-rentals/${userId}`, {
             headers: this.getHeader()
         })
         return response.data
@@ -71,9 +71,9 @@ export default class ApiService {
     }
 
     /**ROOM */
-    /* This  adds a new room room to the database */
-    static async addRoom(formData) {
-        const result = await axios.post(`${this.BASE_URL}/rooms/add`, formData, {
+    /* This adds a new equipment to the database */
+    static async addEquipment(formData) {
+        const result = await axios.post(`${this.BASE_URL}/equipments/add`, formData, {
             headers: {
                 ...this.getHeader(),
                 'Content-Type': 'multipart/form-data'
@@ -82,49 +82,48 @@ export default class ApiService {
         return result.data;
     }
 
-    /* This  gets all availavle rooms */
-    static async getAllAvailableRooms() {
-        const result = await axios.get(`${this.BASE_URL}/rooms/all-available-rooms`)
+    /* This  gets all availavle equipments */
+    static async getAllAvailableEquipments() {
+        const result = await axios.get(`${this.BASE_URL}/equipments/all-available-equipments`)
         return result.data
     }
 
 
-    /* This  gets all availavle by dates rooms from the database with a given date and a room type */
-    static async getAvailableRoomsByDateAndType(checkInDate, checkOutDate, roomType) {
+    /* This gets all available by dates equipments from the database with a given date and an equipment type */
+    static async getAvailableEquipmentByDateAndType(checkInDate, checkOutDate, category) {
         const result = await axios.get(
-            `${this.BASE_URL}/rooms/available-rooms-by-date-and-type?checkInDate=${checkInDate}
-		&checkOutDate=${checkOutDate}&roomType=${roomType}`
+            `${this.BASE_URL}/equipments/available-equipments-by-date-and-type?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&category=${category}`
         )
         return result.data
     }
 
-    /* This  gets all room types from thee database */
-    static async getRoomTypes() {
-        const response = await axios.get(`${this.BASE_URL}/rooms/types`)
+    /* This gets all categories from the database */
+    static async getCategories() {
+        const response = await axios.get(`${this.BASE_URL}/equipments/categories`)
         return response.data
     }
-    /* This  gets all rooms from the database */
-    static async getAllRooms() {
-        const result = await axios.get(`${this.BASE_URL}/rooms/all`)
+    /* This gets all equipments from the database */
+    static async getAllEquipments() {
+        const result = await axios.get(`${this.BASE_URL}/equipments/all`)
         return result.data
     }
-    /* This funcction gets a room by the id */
-    static async getRoomById(roomId) {
-        const result = await axios.get(`${this.BASE_URL}/rooms/room-by-id/${roomId}`)
+    /* This function gets an equipment by the id */
+    static async getEquipmentById(equipmentId) {
+        const result = await axios.get(`${this.BASE_URL}/equipments/equipment-by-id/${equipmentId}`)
         return result.data
     }
 
-    /* This  deletes a room by the Id */
-    static async deleteRoom(roomId) {
-        const result = await axios.delete(`${this.BASE_URL}/rooms/delete/${roomId}`, {
+    /* This  deletes an equipment by the Id */
+    static async deleteEquipment(equipmentId) {
+        const result = await axios.delete(`${this.BASE_URL}/equipments/delete/${equipmentId}`, {
             headers: this.getHeader()
         })
         return result.data
     }
 
-    /* This updates a room */
-    static async updateRoom(roomId, formData) {
-        const result = await axios.put(`${this.BASE_URL}/rooms/update/${roomId}`, formData, {
+    /* This updates an equipment */
+    static async updateEquipment(equipmentId, formData) {
+        const result = await axios.put(`${this.BASE_URL}/equipments/update/${equipmentId}`, formData, {
             headers: {
                 ...this.getHeader(),
                 'Content-Type': 'multipart/form-data'
@@ -136,33 +135,33 @@ export default class ApiService {
 
     /**BOOKING */
     /* This  saves a new booking to the databse */
-    static async bookRoom(roomId, userId, booking) {
+    static async createEquipment(equipmentId, userId, rental) {
 
         console.log("USER ID IS: " + userId)
 
-        const response = await axios.post(`${this.BASE_URL}/bookings/book-room/${roomId}/${userId}`, booking, {
+        const response = await axios.post(`${this.BASE_URL}/rentals/create/${equipmentId}/${userId}`, rental, {
             headers: this.getHeader()
         })
         return response.data
     }
 
-    /* This  gets alll bokings from the database */
-    static async getAllBookings() {
-        const result = await axios.get(`${this.BASE_URL}/bookings/all`, {
+    /* This gets all rentals from the database */
+    static async getAllRentals() {
+        const result = await axios.get(`${this.BASE_URL}/rentals/all`, {
             headers: this.getHeader()
         })
         return result.data
     }
 
-    /* This  get booking by the cnfirmation code */
-    static async getBookingByConfirmationCode(bookingCode) {
-        const result = await axios.get(`${this.BASE_URL}/bookings/get-by-confirmation-code/${bookingCode}`)
+    /* This get rental by the cnfirmation code */
+    static async getRentalByConfirmationCode(rentalCode) {
+        const result = await axios.get(`${this.BASE_URL}/rentals/get-by-confirmation-code/${rentalCode}`)
         return result.data
     }
 
-    /* This is the  to cancel user booking */
-    static async cancelBooking(bookingId) {
-        const result = await axios.delete(`${this.BASE_URL}/bookings/cancel/${bookingId}`, {
+    /* This is to cancel user rental */
+    static async cancelRental(rentalId) {
+        const result = await axios.delete(`${this.BASE_URL}/rentals/cancel/${rentalId}`, {
             headers: this.getHeader()
         })
         return result.data

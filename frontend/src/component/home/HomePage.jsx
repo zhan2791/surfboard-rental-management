@@ -1,75 +1,75 @@
 import React, { useState } from "react";
-import RoomResult from "../common/RoomResult";
-import RoomSearch from "../common/RoomSearch";
+import EquipmentResult from "../common/EquipmentResult";
+import EquipmentSearch from "../common/EquipmentSearch";
 
 
 
 
 const HomePage = () => {
 
-    const [roomSearchResults, setRoomSearchResults] = useState([]);
+    const [equipmentSearchResults, setEquipmentSearchResults] = useState([]);
 
     // Function to handle search results
     const handleSearchResult = (results) => {
-        setRoomSearchResults(results);
+        setEquipmentSearchResults(results);
     };
 
     return (
         <div className="home">
-            {/* HEADER / BANNER ROOM SECTION */}
+            {/* HEADER / BANNER Equipment SECTION */}
             <section>
                 <header className="header-banner">
-                    <img src="./assets/images/hotel.webp" alt="Phegon Hotel" className="header-image" />
+                    <img src="./assets/images/surfboard.webp" alt="Surdboard Rental" className="header-image" />
                     <div className="overlay"></div>
                     <div className="animated-texts overlay-content">
                         <h1>
-                            Welcome to <span className="phegon-color">Phegon Hotel</span>
+                            Welcome to <span className="phegon-color">Surfboard Rental</span>
                         </h1><br />
-                        <h3>Step into a haven of comfort and care</h3>
+                        <h3>Find and rent boards with flexible dates</h3>
                     </div>
                 </header>
             </section>
 
-            {/* SEARCH/FIND AVAILABLE ROOM SECTION */}
-            <RoomSearch handleSearchResult={handleSearchResult} />
-            <RoomResult roomSearchResults={roomSearchResults} />
+            {/* SEARCH/FIND AVAILABLE Equipment SECTION */}
+            <EquipmentSearch handleSearchResult={handleSearchResult} />
+            <EquipmentResult equipmentSearchResults={equipmentSearchResults} />
 
-            <h4><a className="view-rooms-home" href="/rooms">All Rooms</a></h4>
+            <h4><a className="view-rooms-home" href="/equipments">All Boards</a></h4>
 
-            <h2 className="home-services">Services at <span className="phegon-color">Phegon Hotel</span></h2>
+            <h2 className="home-services">Services at <span className="phegon-color">Surfboard Rental</span></h2>
 
             {/* SERVICES SECTION */}
             <section className="service-section"><div className="service-card">
-                <img src="./assets/images/ac.png" alt="Air Conditioning" />
+                <img src="./assets/images/boards.png" alt="Wide Board Selection" />
                 <div className="service-details">
-                    <h3 className="service-title">Air Conditioning</h3>
-                    <p className="service-description">Stay cool and comfortable throughout your stay with our individually controlled in-room air conditioning.</p>
+                    <h3 className="service-title">Wide Board Selection</h3>
+                    <p className="service-description">Choose from a variety of surfboards including shortboards, longboards, and beginner-friendly soft tops.</p>
                 </div>
             </div>
                 <div className="service-card">
-                    <img src="./assets/images/mini-bar.png" alt="Mini Bar" />
+                    <img src="./assets/images/calendar.png" alt="Flexible Rental Periods" />
                     <div className="service-details">
-                        <h3 className="service-title">Mini Bar</h3>
-                        <p className="service-description">Enjoy a convenient selection of beverages and snacks stocked in your room's mini bar with no additional cost.</p>
+                        <h3 className="service-title">Flexible Rental Periods</h3>
+                        <p className="service-description">Rent boards by day or for multiple days with flexible pick-up and return dates to suit your surf plan.</p>
                     </div>
                 </div>
                 <div className="service-card">
-                    <img src="./assets/images/parking.png" alt="Parking" />
+                    <img src="./assets/images/safety.png" alt="Safety Gear Included" />
                     <div className="service-details">
-                        <h3 className="service-title">Parking</h3>
-                        <p className="service-description">We offer on-site parking for your convenience . Please inquire about valet parking options if available.</p>
+                        <h3 className="service-title">Safety Gear Included</h3>
+                        <p className="service-description">Helmets, leashes, and optional wetsuits are available to ensure a safe and comfortable surfing experience.</p>
                     </div>
                 </div>
                 <div className="service-card">
-                    <img src="./assets/images/wifi.png" alt="WiFi" />
+                    <img src="./assets/images/support.png" alt="Local Surf Support" />
                     <div className="service-details">
-                        <h3 className="service-title">WiFi</h3>
-                        <p className="service-description">Stay connected throughout your stay with complimentary high-speed Wi-Fi access available in all guest rooms and public areas.</p>
+                        <h3 className="service-title">Local Surf Support</h3>
+                        <p className="service-description">Get local surf advice, tide information, and board recommendations tailored to your skill level.</p>
                     </div>
                 </div>
 
             </section>
-            {/* AVAILABLE ROOMS SECTION */}
+            {/* AVAILABLE EquipmentS SECTION */}
             <section>
 
             </section>

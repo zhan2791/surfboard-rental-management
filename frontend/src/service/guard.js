@@ -7,6 +7,7 @@ import ApiService from './ApiService';
 
 export const ProtectedRoute = ({ element: Component }) => {
   const location = useLocation();
+  console.log("GUARD location =", location);//临时添加
 
   return ApiService.isAuthenticated() ? (
     Component

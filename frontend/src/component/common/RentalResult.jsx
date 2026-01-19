@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const BookingResult = ({ bookingSearchResults }) => {
+const RentalResult = ({ rentalSearchResults }) => {
   return (
     <div className="rental-results">
-      {bookingSearchResults.map((rental) => (
+      {rentalSearchResults.map((rental) => (
         <div key={rental.id} className="rental-result-item">
-          <p>Room ID: {rental.roomId}</p>
+          <p>Equipment ID: {rental.equipmentId}</p>
           <p>User ID: {rental.userId}</p>
           <p>Start Date: {rental.startDate}</p>
           <p>End Date: {rental.endDate}</p>
@@ -18,4 +18,4 @@ const BookingResult = ({ bookingSearchResults }) => {
   );
 };
 
-export default BookingResult;
+export default RentalResult;

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import ApiService from '../../service/ApiService'; // Assuming your service is in a file called ApiService.js
 
-const FindBookingPage = () => {
+const FindRentalPage = () => {
     const [confirmationCode, setConfirmationCode] = useState(''); // State variable for confirmation code
-    const [bookingDetails, setBookingDetails] = useState(null); // State variable for rental details
+    const [rentalDetails, setRentalDetails] = useState(null); // State variable for rental details
     const [error, setError] = useState(null); // Track any errors
 
     const handleSearch = async () => {
@@ -14,8 +14,8 @@ const FindBookingPage = () => {
         }
         try {
             // Call API to get rental details
-            const response = await ApiService.getBookingByConfirmationCode(confirmationCode);
-            setBookingDetails(response.rental);
+            const response = await ApiService.getRentalByConfirmationCode(confirmationCode);
+            setRentalDetails(response.rental);
             setError(null); // Clear error if successful
         } catch (error) {
             setError(error.response?.data?.message || error.message);
@@ -25,7 +25,7 @@ const FindBookingPage = () => {
 
     return (
         <div className="find-rental-page">
-            <h2>Find Booking</h2>
+            <h2>Find Rental</h2>
             <div className="search-container">
                 <input
                     required
@@ -37,32 +37,30 @@ const FindBookingPage = () => {
                 <button onClick={handleSearch}>Find</button>
             </div>
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            {bookingDetails && (
+            {rentalDetails && (
                 <div className="rental-details">
-                    <h3>Booking Details</h3>
-                    <p>Confirmation Code: {bookingDetails.bookingConfirmationCode}</p>
-                    <p>Check-in Date: {bookingDetails.checkInDate}</p>
-                    <p>Check-out Date: {bookingDetails.checkOutDate}</p>
-                    <p>Num Of Adults: {bookingDetails.numOfAdults}</p>
-                    <p>Num Of Children: {bookingDetails.numOfChildren}</p>
+                    <h3>Rental Details</h3>
+                    <p>Confirmation Code: {rentalDetails.rentalConfirmationCode}</p>
+                    <p>Check-in Date: {rentalDetails.checkInDate}</p>
+                    <p>Check-out Date: {rentalDetails.checkOutDate}</p>
 
                     <br />
                     <hr />
                     <br />
-                    <h3>Booker Detials</h3>
+                    <h3>Renter Details</h3>
                     <div>
-                        <p> Name: {bookingDetails.user.name}</p>
-                        <p> Email: {bookingDetails.user.email}</p>
-                        <p> Phone Number: {bookingDetails.user.phoneNumber}</p>
+                        <p> Name: {rentalDetails.user.name}</p>
+                        <p> Email: {rentalDetails.user.email}</p>
+                        <p> Phone Number: {rentalDetails.user.phoneNumber}</p>
                     </div>
 
                     <br />
                     <hr />
                     <br />
-                    <h3>Room Details</h3>
+                    <h3>Board Details</h3>
                     <div>
-                        <p> Room Type: {bookingDetails.room.roomType}</p>
-                        <img src={bookingDetails.room.roomPhotoUrl} alt="" sizes="" srcSet="" />
+                        <p> Category: {rentalDetails.equipment.category}</p>
+                        <img src={rentalDetails.equipment.imageUrl} alt="" sizes="" srcSet="" />
                     </div>
                 </div>
             )}
@@ -70,4 +68,4 @@ const FindBookingPage = () => {
     );
 };
 
-export default FindBookingPage;
+export default FindRentalPage;

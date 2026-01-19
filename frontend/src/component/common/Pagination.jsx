@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Pagination = ({ roomsPerPage, totalRooms, currentPage, paginate }) => {
+const Pagination = ({ itemsPerPage, totalItems, currentPage, paginate }) => {
   const pageNumbers = [];
 
-  for (let i = 1; i <= Math.ceil(totalRooms / roomsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
     pageNumbers.push(i);
   }
 

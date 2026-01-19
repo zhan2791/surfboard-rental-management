@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Equipments")
+@RequestMapping("/equipments")
 public class EquipmentController {
 
     @Autowired
@@ -50,8 +50,8 @@ public class EquipmentController {
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
-    @GetMapping("/types")
-    public List<String> getCategory() {
+    @GetMapping("/categories")
+    public List<String> getCategories() {
         return equipmentService.getAllCategories();
     }
 

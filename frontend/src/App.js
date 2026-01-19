@@ -8,9 +8,9 @@ import FooterComponent from './component/common/Footer';
 import LoginPage from './component/auth/LoginPage';
 import RegisterPage from './component/auth/RegisterPage';
 import HomePage from './component/home/HomePage';
-import AllRoomsPage from './component/booking_rooms/AllRoomsPage';
-import RoomDetailsBookingPage from './component/booking_rooms/RoomDetailsPage';
-import FindBookingPage from './component/booking_rooms/FindBookingPage';
+import AllEquipmentsPage from './component/booking_rooms/AllEquipmentsPage';
+import EquipmentDetailsRentalPage from './component/booking_rooms/EquipmentDetailsPage';
+import FindRentalPage from './component/booking_rooms/FindRentalPage';
 import AdminPage from './component/admin/AdminPage';
 import ManageRoomPage from './component/admin/ManageRoomPage';
 import EditRoomPage from './component/admin/EditRoomPage';
@@ -32,12 +32,12 @@ function App() {
             <Route exact path="/home" element={<HomePage />} />
             <Route exact path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/rooms" element={<AllRoomsPage />} />
-            <Route path="/find-rental" element={<FindBookingPage />} />
+            <Route path="/equipments" element={<AllEquipmentsPage />} />
+            <Route path="/find-rental" element={<FindRentalPage />} />
 
             {/* Protected Routes */}
-            <Route path="/equipment-details-book/:roomId"
-              element={<ProtectedRoute element={<RoomDetailsBookingPage />} />}
+            <Route path="/equipment-details-book/:equipmentId"
+              element={<ProtectedRoute element={<EquipmentDetailsRentalPage />} />}
             />
             <Route path="/profile"
               element={<ProtectedRoute element={<ProfilePage />} />}

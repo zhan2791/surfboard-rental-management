@@ -4,18 +4,15 @@ import ApiService from '../../service/ApiService'; // Assuming your service is i
 import DatePicker from 'react-datepicker';
 // import 'react-datepicker/dist/react-datepicker.css';
 
-const RoomDetailsPage = () => {
+const EquipmentDetailsPage = () => {
   const navigate = useNavigate(); // Access the navigate function to navigate
-  const { roomId } = useParams(); // Get equipment ID from URL parameters
-  const [roomDetails, setRoomDetails] = useState(null);
+  const { equipmentId } = useParams(); // Get equipment ID from URL parameters
+  const [equipmentDetails, setEquipmentDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // Track loading state
   const [error, setError] = useState(null); // Track any errors
   const [checkInDate, setCheckInDate] = useState(null); // State variable for check-in date
   const [checkOutDate, setCheckOutDate] = useState(null); // State variable for check-out date
-  const [numAdults, setNumAdults] = useState(1); // State variable for number of adults
-  const [numChildren, setNumChildren] = useState(0); // State variable for number of children
   const [totalPrice, setTotalPrice] = useState(0); // State variable for total rental price
-  const [totalGuests, setTotalGuests] = useState(1); // State variable for total number of guests
   const [showDatePicker, setShowDatePicker] = useState(false); // State variable to control date picker visibility
   const [userId, setUserId] = useState(''); // Set user id
   const [showMessage, setShowMessage] = useState(false); // State variable to control message visibility
@@ -26,8 +23,8 @@ const RoomDetailsPage = () => {
     const fetchData = async () => {
       try {
         setIsLoading(true); // Set loading state to true
-        const response = await ApiService.getRoomById(roomId);
-        setRoomDetails(response.equipment);
+        const response = await ApiService.getEquipmentById(equipmentId);
+        setEquipmentDetails(response.equipment);
         const userProfile = await ApiService.getUserProfile();
         setUserId(userProfile.user.id);
       } catch (error) {
@@ -37,7 +34,7 @@ const RoomDetailsPage = () => {
       }
     };
     fetchData();
-  }, [roomId]); // Re-run effect when roomId changes
+  }, [equipmentId]); // Re-run effect when equipmentId changes
 
 
   const handleConfirmBooking = async () => {
@@ -48,12 +45,12 @@ const RoomDetailsPage = () => {
       return;
     }
 
-    // Check if number of adults and children are valid
-    if (isNaN(numAdults) || numAdults < 1 || isNaN(numChildren) || numChildren < 0) {
-      setErrorMessage('Please enter valid numbers for adults and children.');
-      setTimeout(() => setErrorMessage(''), 5000); // Clear error message after 5 seconds
-      return;
-    }
+    // // Check if number of adults and children are valid
+    // if (isNaN(numAdults) || numAdults < 1 || isNaN(numChildren) || numChildren < 0) {
+    //   setErrorMessage('Please enter valid numbers for adults and children.');
+    //   setTimeout(() => setErrorMessage(''), 5000); // Clear error message after 5 seconds
+    //   return;
+    // }
 
     // Calculate total number of days
     const oneDay = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
@@ -65,11 +62,11 @@ const RoomDetailsPage = () => {
     const totalGuests = numAdults + numChildren;
 
     // Calculate total price
-    const roomPricePerNight = roomDetails.roomPrice;
-    const totalPrice = roomPricePerNight * totalDays;
+    const equipmentPricePerNight = equipmentDetails.equipmentPrice;
+    const totalPrice = equipmentPricePerNight * totalDays;
 
     setTotalPrice(totalPrice);
-    setTotalGuests(totalGuests);
+
   };
 
   const acceptBooking = async () => {
@@ -231,4 +228,4 @@ const RoomDetailsPage = () => {
   );
 };
 
-export default RoomDetailsPage;
+export default EquipmentDetailsPage;

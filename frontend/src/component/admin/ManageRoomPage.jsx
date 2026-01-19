@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ApiService from '../../service/ApiService';
 import Pagination from '../common/Pagination';
-import RoomResult from '../common/RoomResult';
+import EquipmentResult from '../common/EquipmentResult';
 
 const ManageRoomPage = () => {
   const [rooms, setRooms] = useState([]);
@@ -81,7 +81,7 @@ const ManageRoomPage = () => {
         </div>
       </div>
 
-      <RoomResult roomSearchResults={currentRooms} />
+      <EquipmentResult roomSearchResults={currentRooms} />
 
       <Pagination
         roomsPerPage={roomsPerPage}
