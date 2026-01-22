@@ -1,2 +1,2 @@
-# phegon-hotel-rental-and-management
-A Hotel rental and management platform
+# surfboard-rental-management
+A surfboard rental and management platform
