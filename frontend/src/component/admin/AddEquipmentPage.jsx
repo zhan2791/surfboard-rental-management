@@ -3,52 +3,52 @@ import { useNavigate } from 'react-router-dom';
 import ApiService from '../../service/ApiService';
 
 
-const AddRoomPage = () => {
+const AddEquipmentPage = () => {
     const navigate = useNavigate();
-    const [roomDetails, setRoomDetails] = useState({
-        roomPhotoUrl: '',
-        roomType: '',
-        roomPrice: '',
-        roomDescription: '',
+    const [equipmentDetails, setEquipmentDetails] = useState({
+        imageUrl: '',
+        category: '',
+        dailyRate: '',
+        description: '',
     });
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    const [roomTypes, setRoomTypes] = useState([]);
-    const [newRoomType, setNewRoomType] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const [newCategory, setNewCategory] = useState(false);
 
 
     useEffect(() => {
-        const fetchRoomTypes = async () => {
+        const fetchCategories = async () => {
             try {
-                const types = await ApiService.getRoomTypes();
-                setRoomTypes(types);
+                const types = await ApiService.getCategories();
+                setCategories(types);
             } catch (error) {
                 console.error('Error fetching equipment types:', error.message);
             }
         };
-        fetchRoomTypes();
+        fetchCategories();
     }, []);
 
 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setRoomDetails(prevState => ({
+        setEquipmentDetails(prevState => ({
             ...prevState,
             [name]: value,
         }));
     };
 
 
-    const handleRoomTypeChange = (e) => {
+    const handleCategoryChange = (e) => {
         if (e.target.value === 'new') {
-            setNewRoomType(true);
-            setRoomDetails(prevState => ({ ...prevState, roomType: '' }));
+            setNewCategory(true);
+            setEquipmentDetails(prevState => ({ ...prevState, category: '' }));
         } else {
-            setNewRoomType(false);
-            setRoomDetails(prevState => ({ ...prevState, roomType: e.target.value }));
+            setNewCategory(false);
+            setEquipmentDetails(prevState => ({ ...prevState, category: e.target.value }));
         }
     };
 
@@ -65,8 +65,8 @@ const AddRoomPage = () => {
     };
 
 
-    const addRoom = async () => {
-        if (!roomDetails.roomType || !roomDetails.roomPrice || !roomDetails.roomDescription) {
+    const addEquipment = async () => {
+        if (!equipmentDetails.category || !equipmentDetails.dailyRate || !equipmentDetails.description) {
             setError('All equipment details must be provided.');
             setTimeout(() => setError(''), 5000);
             return;
@@ -78,21 +78,21 @@ const AddRoomPage = () => {
 
         try {
             const formData = new FormData();
-            formData.append('roomType', roomDetails.roomType);
-            formData.append('roomPrice', roomDetails.roomPrice);
-            formData.append('roomDescription', roomDetails.roomDescription);
+            formData.append('category', equipmentDetails.category);
+            formData.append('dailyRate', equipmentDetails.dailyRate);
+            formData.append('description', equipmentDetails.description);
 
             if (file) {
                 formData.append('photo', file);
             }
 
-            const result = await ApiService.addRoom(formData);
+            const result = await ApiService.addEquipment(formData);
             if (result.statusCode === 200) {
-                setSuccess('Room Added successfully.');
+                setSuccess('Equipment Added successfully.');
                 
                 setTimeout(() => {
                     setSuccess('');
-                    navigate('/admin/manage-rooms');
+                    navigate('/admin/manage-equipments');
                 }, 3000);
             }
         } catch (error) {
@@ -103,61 +103,61 @@ const AddRoomPage = () => {
 
     return (
         <div className="edit-equipment-container">
-            <h2>Add New Room</h2>
+            <h2>Add New Equipment</h2>
             {error && <p className="error-message">{error}</p>}
             {success && <p className="success-message">{success}</p>}
             <div className="edit-equipment-form">
                 <div className="form-group">
                     {preview && (
-                        <img src={preview} alt="Room Preview" className="equipment-photo-preview" />
+                        <img src={preview} alt="Equipment Preview" className="equipment-photo-preview" />
                     )}
                     <input
                         type="file"
-                        name="roomPhoto"
+                        name="equipmentPhoto"
                         onChange={handleFileChange}
                     />
                 </div>
 
                 <div className="form-group">
-                    <label>Room Type</label>
-                    <select value={roomDetails.roomType} onChange={handleRoomTypeChange}>
-                        <option value="">Select a equipment type</option>
-                        {roomTypes.map(type => (
+                    <label>Category</label>
+                    <select value={equipmentDetails.category} onChange={handleCategoryChange}>
+                        <option value="">Select an equipment type</option>
+                        {categories.map(type => (
                             <option key={type} value={type}>{type}</option>
                         ))}
                         <option value="new">Other (please specify)</option>
                     </select>
-                    {newRoomType && (
+                    {newCategory && (
                         <input
                             type="text"
-                            name="roomType"
+                            name="category"
                             placeholder="Enter new equipment type"
-                            value={roomDetails.roomType}
+                            value={equipmentDetails.category}
                             onChange={handleChange}
                         />
                     )}
                 </div>
                 <div className="form-group">
-                    <label>Room Price</label>
+                    <label> Dailyrate </label>
                     <input
                         type="text"
-                        name="roomPrice"
-                        value={roomDetails.roomPrice}
+                        name="dailyRate"
+                        value={equipmentDetails.dailyRate}
                         onChange={handleChange}
                     />
                 </div>
                 <div className="form-group">
-                    <label>Room Description</label>
+                    <label>Equipment Description</label>
                     <textarea
-                        name="roomDescription"
-                        value={roomDetails.roomDescription}
+                        name="description"
+                        value={equipmentDetails.description}
                         onChange={handleChange}
                     ></textarea>
                 </div>
-                <button className="update-button" onClick={addRoom}>Add Room</button>
+                <button className="update-button" onClick={addEquipment}>Add Equipment</button>
             </div>
         </div>
     );
 };
 
-export default AddRoomPage;
+export default AddEquipmentPage;

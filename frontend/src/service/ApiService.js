@@ -133,13 +133,13 @@ export default class ApiService {
     }
 
 
-    /**BOOKING */
-    /* This  saves a new booking to the databse */
-    static async createEquipment(equipmentId, userId, rental) {
+    /**Rental */
+    /* This  saves a new rental to the databse */
+    static async rentalEquipment(equipmentId, userId, rental) {
 
         console.log("USER ID IS: " + userId)
 
-        const response = await axios.post(`${this.BASE_URL}/rentals/create/${equipmentId}/${userId}`, rental, {
+        const response = await axios.post(`${this.BASE_URL}/rentals/rental-equipment/${equipmentId}/${userId}`, rental, {
             headers: this.getHeader()
         })
         return response.data

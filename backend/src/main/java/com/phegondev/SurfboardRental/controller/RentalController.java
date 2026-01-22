@@ -17,14 +17,14 @@ public class RentalController {
     @Autowired
     private IRentalService rentalService;
 
-    @PostMapping("/book-equipment/{rentalId}/{userId}")
+    @PostMapping("/rental-equipment/{equipmentId}/{userId}")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
-    public ResponseEntity<Response> saveRentals(@PathVariable Long rentalId,
+    public ResponseEntity<Response> saveRentals(@PathVariable Long equipmentId,
                                                  @PathVariable Long userId,
                                                  @RequestBody Rental rentalRequest) {
 
 
-        Response response = rentalService.saveRental(rentalId, userId, rentalRequest);
+        Response response = rentalService.saveRental(equipmentId, userId, rentalRequest);
         return ResponseEntity.status(response.getStatusCode()).body(response);
 
     }

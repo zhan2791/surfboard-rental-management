@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ApiService from '../../service/ApiService';
 
-const EditRoomPage = () => {
-    const { roomId } = useParams();
+const EditEquipmentPage = () => {
+    const { equipmentId } = useParams();
     const navigate = useNavigate();
-    const [roomDetails, setRoomDetails] = useState({
-        roomPhotoUrl: '',
-        roomType: '',
-        roomPrice: '',
-        roomDescription: '',
+    const [equipmentDetails, setRoomDetails] = useState({
+        imageUrl: '',
+        cateogry: '',
+        dailyRate: '',
+        description: '',
     });
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
@@ -19,19 +19,19 @@ const EditRoomPage = () => {
     useEffect(() => {
         const fetchRoomDetails = async () => {
             try {
-                const response = await ApiService.getRoomById(roomId);
+                const response = await ApiService.getRoomById(equipmentId);
                 setRoomDetails({
-                    roomPhotoUrl: response.equipment.roomPhotoUrl,
-                    roomType: response.equipment.roomType,
-                    roomPrice: response.equipment.roomPrice,
-                    roomDescription: response.equipment.roomDescription,
+                    imageUrl: response.equipment.imageUrl,
+                    cateogry: response.equipment.cateogry,
+                    dailyRate: response.equipment.dailyRate,
+                    description: response.equipment.description,
                 });
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
             }
         };
         fetchRoomDetails();
-    }, [roomId]);
+    }, [equipmentId]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -56,21 +56,21 @@ const EditRoomPage = () => {
     const handleUpdate = async () => {
         try {
             const formData = new FormData();
-            formData.append('roomType', roomDetails.roomType);
-            formData.append('roomPrice', roomDetails.roomPrice);
-            formData.append('roomDescription', roomDetails.roomDescription);
+            formData.append('cateogry', equipmentDetails.cateogry);
+            formData.append('dailyRate', equipmentDetails.dailyRate);
+            formData.append('description', equipmentDetails.description);
 
             if (file) {
                 formData.append('photo', file);
             }
 
-            const result = await ApiService.updateRoom(roomId, formData);
+            const result = await ApiService.updateRoom(equipmentId, formData);
             if (result.statusCode === 200) {
                 setSuccess('Room updated successfully.');
                 
                 setTimeout(() => {
                     setSuccess('');
-                    navigate('/admin/manage-rooms');
+                    navigate('/admin/manage-equipments');
                 }, 3000);
             }
             setTimeout(() => setSuccess(''), 5000);
@@ -83,13 +83,13 @@ const EditRoomPage = () => {
     const handleDelete = async () => {
         if (window.confirm('Do you want to delete this equipment?')) {
             try {
-                const result = await ApiService.deleteRoom(roomId);
+                const result = await ApiService.deleteRoom(equipmentId);
                 if (result.statusCode === 200) {
                     setSuccess('Room Deleted successfully.');
                     
                     setTimeout(() => {
                         setSuccess('');
-                        navigate('/admin/manage-rooms');
+                        navigate('/admin/manage-equipments');
                     }, 3000);
                 }
             } catch (error) {
@@ -109,13 +109,13 @@ const EditRoomPage = () => {
                     {preview ? (
                         <img src={preview} alt="Room Preview" className="equipment-photo-preview" />
                     ) : (
-                        roomDetails.roomPhotoUrl && (
-                            <img src={roomDetails.roomPhotoUrl} alt="Room" className="equipment-photo" />
+                        equipmentDetails.imageUrl && (
+                            <img src={equipmentDetails.imageUrl} alt="Room" className="equipment-photo" />
                         )
                     )}
                     <input
                         type="file"
-                        name="roomPhoto"
+                        name="equipmentPhoto"
                         onChange={handleFileChange}
                     />
                 </div>
@@ -123,8 +123,8 @@ const EditRoomPage = () => {
                     <label>Room Type</label>
                     <input
                         type="text"
-                        name="roomType"
-                        value={roomDetails.roomType}
+                        name="cateogry"
+                        value={equipmentDetails.cateogry}
                         onChange={handleChange}
                     />
                 </div>
@@ -132,16 +132,16 @@ const EditRoomPage = () => {
                     <label>Room Price</label>
                     <input
                         type="text"
-                        name="roomPrice"
-                        value={roomDetails.roomPrice}
+                        name="dailyRate"
+                        value={equipmentDetails.dailyRate}
                         onChange={handleChange}
                     />
                 </div>
                 <div className="form-group">
                     <label>Room Description</label>
                     <textarea
-                        name="roomDescription"
-                        value={roomDetails.roomDescription}
+                        name="description"
+                        value={equipmentDetails.description}
                         onChange={handleChange}
                     ></textarea>
                 </div>
@@ -152,4 +152,4 @@ const EditRoomPage = () => {
     );
 };
 
-export default EditRoomPage;
+export default EditEquipmentPage;

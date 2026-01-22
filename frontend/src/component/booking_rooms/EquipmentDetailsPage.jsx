@@ -37,20 +37,17 @@ const EquipmentDetailsPage = () => {
   }, [equipmentId]); // Re-run effect when equipmentId changes
 
 
-  const handleConfirmBooking = async () => {
+  const handleConfirmRental = async () => {
     // Check if check-in and check-out dates are selected
+    console.log("dates:", { checkInDate, checkOutDate });//for error checking
     if (!checkInDate || !checkOutDate) {
       setErrorMessage('Please select check-in and check-out dates.');
       setTimeout(() => setErrorMessage(''), 5000); // Clear error message after 5 seconds
+      console.log("blocked: missing dates");//error checking
       return;
     }
 
-    // // Check if number of adults and children are valid
-    // if (isNaN(numAdults) || numAdults < 1 || isNaN(numChildren) || numChildren < 0) {
-    //   setErrorMessage('Please enter valid numbers for adults and children.');
-    //   setTimeout(() => setErrorMessage(''), 5000); // Clear error message after 5 seconds
-    //   return;
-    // }
+
 
     // Calculate total number of days
     const oneDay = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
@@ -58,18 +55,16 @@ const EquipmentDetailsPage = () => {
     const endDate = new Date(checkOutDate);
     const totalDays = Math.round(Math.abs((endDate - startDate) / oneDay)) + 1;
 
-    // Calculate total number of guests
-    const totalGuests = numAdults + numChildren;
 
     // Calculate total price
-    const equipmentPricePerNight = equipmentDetails.equipmentPrice;
+    const equipmentPricePerNight = equipmentDetails.dailyRate;
     const totalPrice = equipmentPricePerNight * totalDays;
 
     setTotalPrice(totalPrice);
 
   };
 
-  const acceptBooking = async () => {
+  const acceptRental = async () => {
     try {
 
       // Ensure checkInDate and checkOutDate are Date objects
@@ -93,21 +88,20 @@ const EquipmentDetailsPage = () => {
       const rental = {
         checkInDate: formattedCheckInDate,
         checkOutDate: formattedCheckOutDate,
-        numOfAdults: numAdults,
-        numOfChildren: numChildren
+
       };
       console.log(rental)
       console.log(checkOutDate)
 
       // Make rental
-      const response = await ApiService.bookRoom(roomId, userId, rental);
+      const response = await ApiService.rentalEquipment(equipmentId, userId, rental);
       if (response.statusCode === 200) {
-        setConfirmationCode(response.bookingConfirmationCode); // Set rental confirmation code
+        setConfirmationCode(response.rentalConfirmationCode); // Set rental confirmation code
         setShowMessage(true); // Show message
         // Hide message and navigate to homepage after 5 seconds
         setTimeout(() => {
           setShowMessage(false);
-          navigate('/rooms'); // Navigate to rooms
+          navigate('/equipments'); // Navigate to equipments
         }, 10000);
       }
     } catch (error) {
@@ -124,17 +118,17 @@ const EquipmentDetailsPage = () => {
     return <p className='equipment-detail-loading'>{error}</p>;
   }
 
-  if (!roomDetails) {
-    return <p className='equipment-detail-loading'>Room not found.</p>;
+  if (!equipmentDetails) {
+    return <p className='equipment-detail-loading'>Equipment not found.</p>;
   }
 
-  const { roomType, roomPrice, roomPhotoUrl, description, bookings } = roomDetails;
+  const { category, dailyRate, imageUrl, description, rentals } = equipmentDetails;
 
   return (
     <div className="equipment-details-rental">
       {showMessage && (
         <p className="rental-success-message">
-          Booking successful! Confirmation code: {confirmationCode}. An SMS and email of your rental details have been sent to you.
+          Rental successful! Confirmation code: {confirmationCode}. An SMS and email of your rental details have been sent to you.
         </p>
       )}
       {errorMessage && (
@@ -142,21 +136,21 @@ const EquipmentDetailsPage = () => {
           {errorMessage}
         </p>
       )}
-      <h2>Room Details</h2>
+      <h2>Equipment Details</h2>
       <br />
-      <img src={roomPhotoUrl} alt={roomType} className="equipment-details-image" />
+      <img src={imageUrl} alt={category} className="equipment-details-image" />
       <div className="equipment-details-info">
-        <h3>{roomType}</h3>
-        <p>Price: ${roomPrice} / night</p>
+        <h3>{category}</h3>
+        <p>Price: ${dailyRate} / day</p>
         <p>{description}</p>
       </div>
-      {bookings && bookings.length > 0 && (
+      {rentals && rentals.length > 0 && (
         <div>
-          <h3>Existing Booking Details</h3>
+          <h3>Existing Rental Details</h3>
           <ul className="rental-list">
-            {bookings.map((rental, index) => (
+            {rentals.map((rental, index) => (
               <li key={rental.id} className="rental-item">
-                <span className="rental-number">Booking {index + 1} </span>
+                <span className="rental-number">Rental {index + 1} </span>
                 <span className="rental-text">Check-in: {rental.checkInDate} </span>
                 <span className="rental-text">Out: {rental.checkOutDate}</span>
               </li>
@@ -165,7 +159,7 @@ const EquipmentDetailsPage = () => {
         </div>
       )}
       <div className="rental-info">
-        <button className="book-now-button" onClick={() => setShowDatePicker(true)}>Book Now</button>
+        <button className="rent-now-button" onClick={() => setShowDatePicker(true)}>Rent Now</button>
         <button className="go-back-button" onClick={() => setShowDatePicker(false)}>Go Back</button>
         {showDatePicker && (
           <div className="date-picker-container">
@@ -194,33 +188,30 @@ const EquipmentDetailsPage = () => {
             />
 
             <div className='guest-container'>
-              <div className="guest-div">
-                <label>Adults:</label>
-                <input
-                  type="number"
-                  min="1"
-                  value={numAdults}
-                  onChange={(e) => setNumAdults(parseInt(e.target.value))}
-                />
-              </div>
-              <div className="guest-div">
-                <label>Children:</label>
-                <input
-                  type="number"
-                  min="0"
-                  value={numChildren}
-                  onChange={(e) => setNumChildren(parseInt(e.target.value))}
-                />
-              </div>
-              <button className="confirm-rental" onClick={handleConfirmBooking}>Confirm Booking</button>
+
+
+              <button
+                  type="button"
+                  className="confirm-rental"
+                  onClick={async () => {
+                    console.log("BUTTON clicked");
+                    try {
+                      await handleConfirmRental();
+                      console.log("handleConfirmRental finished");
+                    } catch (e) {
+                      console.error("handleConfirmRental error:", e);
+                    }
+                  }}
+              >
+                Confirm Rental
+              </button>
             </div>
           </div>
         )}
         {totalPrice > 0 && (
           <div className="total-price">
             <p>Total Price: ${totalPrice}</p>
-            <p>Total Guests: {totalGuests}</p>
-            <button onClick={acceptBooking} className="accept-rental">Accept Booking</button>
+            <button onClick={acceptRental} className="accept-rental">Accept Rental</button>
           </div>
         )}
       </div>

@@ -12,11 +12,11 @@ import AllEquipmentsPage from './component/booking_rooms/AllEquipmentsPage';
 import EquipmentDetailsRentalPage from './component/booking_rooms/EquipmentDetailsPage';
 import FindRentalPage from './component/booking_rooms/FindRentalPage';
 import AdminPage from './component/admin/AdminPage';
-import ManageRoomPage from './component/admin/ManageRoomPage';
-import EditRoomPage from './component/admin/EditRoomPage';
-import AddRoomPage from './component/admin/AddRoomPage';
-import ManageBookingsPage from './component/admin/ManageBookingsPage';
-import EditBookingPage from './component/admin/EditBookingPage';
+import ManageEquipmentPage from './component/admin/ManageEquipmentPage';
+import EditEquipmentPage from './component/admin/EditEquipmentPage';
+import AddEquipmentPage from './component/admin/AddEquipmentPage';
+import ManageRentalsPage from './component/admin/ManageRentalsPage';
+import EditRentalPage from './component/admin/EditRentalPage';
 import ProfilePage from './component/profile/ProfilePage';
 import EditProfilePage from './component/profile/EditProfilePage';
 import { ProtectedRoute, AdminRoute } from './service/guard';
@@ -36,7 +36,7 @@ function App() {
             <Route path="/find-rental" element={<FindRentalPage />} />
 
             {/* Protected Routes */}
-            <Route path="/equipment-details-book/:equipmentId"
+            <Route path="/equipment-details-rent/:equipmentId"
               element={<ProtectedRoute element={<EquipmentDetailsRentalPage />} />}
             />
             <Route path="/profile"
@@ -50,20 +50,20 @@ function App() {
             <Route path="/admin"
               element={<AdminRoute element={<AdminPage />} />}
             />
-            <Route path="/admin/manage-rooms"
-              element={<AdminRoute element={<ManageRoomPage />} />}
+            <Route path="/admin/manage-equipments"
+              element={<AdminRoute element={<ManageEquipmentPage />} />}
             />
-            <Route path="/admin/edit-equipment/:roomId"
-              element={<AdminRoute element={<EditRoomPage />} />}
+            <Route path="/admin/edit-equipment/:equipmentId"
+              element={<AdminRoute element={<EditEquipmentPage />} />}
             />
             <Route path="/admin/add-equipment"
-              element={<AdminRoute element={<AddRoomPage />} />}
+              element={<AdminRoute element={<AddEquipmentPage />} />}
             />
-            <Route path="/admin/manage-bookings"
-              element={<AdminRoute element={<ManageBookingsPage />} />}
+            <Route path="/admin/manage-rentals"
+              element={<AdminRoute element={<ManageRentalsPage />} />}
             />
-            <Route path="/admin/edit-rental/:bookingCode"
-              element={<AdminRoute element={<EditBookingPage />} />}
+            <Route path="/admin/edit-rental/:rentalCode"
+              element={<AdminRoute element={<EditRentalPage />} />}
             />
 
             {/* Fallback Route */}
