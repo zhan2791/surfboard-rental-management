@@ -9,8 +9,6 @@ import EquipmentSearch from '../common/EquipmentSearch';
 const AllEquipmentsPage = () => {
   const [equipments, setEquipments] = useState([]);
   const [filteredEquipments, setFilteredEquipments] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [equipmentsPerPage] = useState(5);
 
@@ -32,68 +30,49 @@ const AllEquipmentsPage = () => {
         console.error('Error fetching equipments:', error.message);
       }
     };
-
-    const fetchCategories = async () => {
-      try {
-        const types = await ApiService.getCategories();
-        setCategories(types);
-      } catch (error) {
-        console.error('Error fetching categories:', error.message);
-      }
-    };
-
     fetchEquipments();
-    fetchCategories();
   }, []);
 
-  const handleCategoryChange = (e) => {
-    setSelectedCategory(e.target.value);
-    filterEquipments(e.target.value);
-  };
-
-  const filterEquipments = (type) => {
-    if (type === '') {
-      setFilteredEquipments(equipments);
-    } else {
-      const filtered = equipments.filter((equipment) => equipment.category === type);
-      setFilteredEquipments(filtered);
-    }
-    setCurrentPage(1); // Reset to first page after filtering
-  };
 
   // Pagination
   const indexOfLastEquipment = currentPage * equipmentsPerPage;
   const indexOfFirstEquipment = indexOfLastEquipment - equipmentsPerPage;
   const currentEquipments = filteredEquipments.slice(indexOfFirstEquipment, indexOfLastEquipment);
-
-  // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className='all-equipments'>
-      <h2>All Equipments</h2>
-      <div className='all-equipment-filter-div'>
-        <label>Filter by Category:</label>
-        <select value={selectedCategory} onChange={handleCategoryChange}>
-          <option value="">All</option>
-          {categories.map((type) => (
-            <option key={type} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
-      </div>
-      
-      <EquipmentSearch handleSearchResult={handleSearchResult} />
-      <EquipmentResult equipmentSearchResults={currentEquipments} />
+      <div className='min-h-screen bg-slate-50 pb-20'>
 
-      <Pagination
-          equipmentsPerPage={equipmentsPerPage}
-        totalEquipments={filteredEquipments.length}
-        currentPage={currentPage}
-        paginate={paginate}
-      />
-    </div>
+        {/* Page Title: Elegant Serif Style */}
+        <div className="container mx-auto px-4 pt-12 mb-10 text-center">
+          <h2 className="text-4xl md:text-5xl font-serif font-semibold text-slate-800">
+            Our Collection
+          </h2>
+          <p className="mt-2 text-slate-500 text-sm tracking-wide uppercase">
+            Available Boards & Rental Equipment
+          </p>
+
+        </div>
+
+        {/* Search Bar: Independent spacing */}
+        <div className="mb-12">
+          <EquipmentSearch handleSearchResult={handleSearchResult} isHomePage={false} />
+        </div>
+
+        {/* Result List */}
+        <div className="container mx-auto px-4">
+          <EquipmentResult equipmentSearchResults={currentEquipments} />
+
+          <div className="mt-10 flex justify-center">
+            <Pagination
+                equipmentsPerPage={equipmentsPerPage}
+                totalEquipments={filteredEquipments.length}
+                currentPage={currentPage}
+                paginate={paginate}
+            />
+          </div>
+        </div>
+      </div>
   );
 };
 

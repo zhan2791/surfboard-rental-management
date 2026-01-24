@@ -1,3 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8fafc;
+    color: #334155;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 专门给标题用的类 */
+.font-serif {
+    font-family: 'Playfair Display', serif;
+}
+
+/* 修复日期选择器被遮挡的问题 (强制置顶) */
+.react-datepicker-popper {
+    z-index: 9999 !important;
+}
+
+/* 美化日期选择器 */
+.react-datepicker {
+    font-family: 'Inter', sans-serif !important;
+    border: none !important;
+    border-radius: 16px !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    overflow: hidden;
+}
+.react-datepicker__header {
+    background-color: white !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+}
+
+/**/
+
 * {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -165,6 +203,22 @@ button[type="submit"]:hover {
     bottom: 0;
     width: 100%;
     font-weight: 500;
+}
+
+/* ============================== */
+/* 终极布局修复：让 Footer 永远沉底 */
+/* ============================== */
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* 强制占满整个屏幕高度 */
+}
+
+/* 让中间的内容区域自动撑开，把 Footer 挤下去 */
+.home,
+section,
+.container {
+    flex-grow: 1;
 }
 
 
@@ -1209,3 +1263,4 @@ h2 {
     }
 
 }
+
