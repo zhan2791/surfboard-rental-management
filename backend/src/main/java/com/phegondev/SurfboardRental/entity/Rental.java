@@ -44,7 +44,7 @@ public class Rental {
                 "id=" + id +
                 ", checkInDate=" + checkInDate +
                 ", checkOutDate=" + checkOutDate +
-                ", bookingConfirmationCode='" + rentalConfirmationCode + '\'' +
+                ", rentalConfirmationCode='" + rentalConfirmationCode + '\'' +
                 ", quantity=" + quantity +
                 '}';
     }
