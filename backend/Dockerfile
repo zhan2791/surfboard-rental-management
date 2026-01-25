@@ -12,7 +12,7 @@ COPY pom.xml .
 COPY src ./src
 
 # 3. Build the JAR file (skip tests to save time during deployment)
-RUN mvn clean package -DskipTests
+RUN mvn clean package -Dmaven.test.skip=true
 
 # ========================================================
 # Stage 2: Run the Application
