@@ -2,7 +2,7 @@
 # Stage 1: Build the Application
 # Use the official Maven image to compile and package the app
 # ========================================================
-FROM maven:3.8.5-openjdk-17 AS build
+FROM maven:3.8.5-openjdk-21 AS build
 WORKDIR /app
 
 # 1. Copy pom.xml first to leverage Docker layer caching
@@ -18,7 +18,7 @@ RUN mvn clean package -Dmaven.test.skip=true
 # Stage 2: Run the Application
 # Use a lightweight JDK image to run the app
 # ========================================================
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
 
 # 4. Copy only the built JAR file from the 'build' stage
