@@ -2,7 +2,7 @@
 # Stage 1: Build the Application
 # Use the official Maven image to compile and package the app
 # ========================================================
-FROM maven:3.8.5-openjdk-21 AS build
+FROM maven:3.9.6-openjdk-21 AS build
 WORKDIR /app
 
 # 1. Copy pom.xml first to leverage Docker layer caching
