@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EquipmentResult from "../common/EquipmentResult";
 import EquipmentSearch from "../common/EquipmentSearch";
 
 const HomePage = () => {
 
     const [equipmentSearchResults, setEquipmentSearchResults] = useState([]);
+
+    //title
+    useEffect(() => {
+        document.title = "Surfboard Rental | Home";
+    }, []);
 
     // Function to handle search results
     const handleSearchResult = (results) => {

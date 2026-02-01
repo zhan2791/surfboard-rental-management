@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ApiService from '../../service/ApiService';
 
 const FindRentalPage = () => {
     const [confirmationCode, setConfirmationCode] = useState('');
     const [rentalDetails, setRentalDetails] = useState(null);
     const [error, setError] = useState(null);
+
+    //title
+    useEffect(() => {
+        document.title = "Find Your Rental | Surfboard Rental";
+    }, []);
 
     const handleSearch = async () => {
         if (!confirmationCode.trim()) {

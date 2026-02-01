@@ -12,6 +12,11 @@ const AllEquipmentsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [equipmentsPerPage] = useState(5);
 
+  //title
+  useEffect(() => {
+    document.title = "Our Collection | Surfboard Rental";
+  }, []);
+
   // Function to handle search results
   const handleSearchResult = (results) => {
     setEquipments(results);
