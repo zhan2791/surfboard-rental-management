@@ -120,7 +120,7 @@ const EditEquipmentPage = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label>Equipment Type</label>
+                    <label>Category</label>
                     <input
                         type="text"
                         name="category"
@@ -129,7 +129,7 @@ const EditEquipmentPage = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label>Equipment Price</label>
+                    <label>Daily Rate</label>
                     <input
                         type="text"
                         name="dailyRate"
@@ -138,7 +138,7 @@ const EditEquipmentPage = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label>Equipment Description</label>
+                    <label>Description</label>
                     <textarea
                         name="description"
                         value={equipmentDetails.description}
