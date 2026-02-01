@@ -19,6 +19,11 @@ const EquipmentDetailsPage = () => {
   const [confirmationCode, setConfirmationCode] = useState(''); // State variable for rental confirmation code
   const [errorMessage, setErrorMessage] = useState(''); // State variable for error message
 
+  //title
+  useEffect(() => {
+    document.title = "Equipment Details | Surfboard Rental";
+  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       try {

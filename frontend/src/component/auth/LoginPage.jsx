@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import ApiService from "../../service/ApiService";
 
@@ -10,6 +10,11 @@ function LoginPage() {
     const location = useLocation();
 
     const from = location.state?.from?.pathname || '/home';
+
+    //title
+    useEffect(() => {
+        document.title = "Login | Surfboard Rental";
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

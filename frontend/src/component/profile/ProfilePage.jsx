@@ -7,6 +7,11 @@ const ProfilePage = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
+    //title
+    useEffect(() => {
+        document.title = "My Profile | Surfboard Rental";
+    }, []);
+
     useEffect(() => {
         const fetchUserProfile = async () => {
             try {

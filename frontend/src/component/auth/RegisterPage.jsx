@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ApiService from '../../service/ApiService';
 import { useNavigate, NavLink } from 'react-router-dom';
 
@@ -14,6 +14,11 @@ function RegisterPage() {
 
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+
+    //title
+    useEffect(() => {
+        document.title = "Create Account | Surfboard Rental";
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
