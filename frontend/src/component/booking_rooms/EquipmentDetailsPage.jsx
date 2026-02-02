@@ -58,12 +58,12 @@ const EquipmentDetailsPage = () => {
     const oneDay = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
     const startDate = new Date(checkInDate);
     const endDate = new Date(checkOutDate);
-    const totalDays = Math.round(Math.abs((endDate - startDate) / oneDay)) + 1;
+    const totalDays = Math.max(1, Math.ceil(Math.abs(endDate - startDate) / (1000 * 60 * 60 * 24)));
 
 
     // Calculate total price
-    const equipmentPricePerNight = equipmentDetails.dailyRate;
-    const totalPrice = equipmentPricePerNight * totalDays;
+    const equipmentPricePerDay = equipmentDetails.dailyRate;
+    const totalPrice = equipmentPricePerDay * totalDays;
 
     setTotalPrice(totalPrice);
 
