@@ -36,6 +36,21 @@ A full-stack web application designed for managing surfboard and diving equipmen
 * **Order History**: Users can view their past and active rental records.
 * **Responsive UI**: Optimized interface for both desktop and mobile devices.
 
+## Demo Accounts
+
+For evaluation and demonstration purposes, you may use the following test accounts:
+
+### Admin Account
+- **Email:** admin@email.com  
+- **Password:** 123456
+
+### User Account
+- **Email:** lucy@email.com  
+- **Password:** 1234567
+
+> ⚠️ These are demo credentials only.  
+> Please do not use real personal information.
+
 ## Local Development Setup
 
 To run this project locally, ensure you have the following installed:
