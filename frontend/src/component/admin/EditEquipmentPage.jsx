@@ -5,9 +5,9 @@ import ApiService from '../../service/ApiService';
 const EditEquipmentPage = () => {
     const { equipmentId } = useParams();
     const navigate = useNavigate();
-    const [equipmentDetails, setRoomDetails] = useState({
+    const [equipmentDetails, setEquipmentDetails] = useState({
         imageUrl: '',
-        cateogry: '',
+        category: '',
         dailyRate: '',
         description: '',
     });
@@ -17,12 +17,12 @@ const EditEquipmentPage = () => {
     const [success, setSuccess] = useState('');
 
     useEffect(() => {
-        const fetchRoomDetails = async () => {
+        const fetchEquipmentDetails = async () => {
             try {
-                const response = await ApiService.getRoomById(equipmentId);
-                setRoomDetails({
+                const response = await ApiService.getEquipmentById(equipmentId);
+                setEquipmentDetails({
                     imageUrl: response.equipment.imageUrl,
-                    cateogry: response.equipment.cateogry,
+                    category: response.equipment.category,
                     dailyRate: response.equipment.dailyRate,
                     description: response.equipment.description,
                 });
@@ -30,12 +30,12 @@ const EditEquipmentPage = () => {
                 setError(error.response?.data?.message || error.message);
             }
         };
-        fetchRoomDetails();
+        fetchEquipmentDetails();
     }, [equipmentId]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setRoomDetails(prevState => ({
+        setEquipmentDetails(prevState => ({
             ...prevState,
             [name]: value,
         }));
@@ -56,7 +56,7 @@ const EditEquipmentPage = () => {
     const handleUpdate = async () => {
         try {
             const formData = new FormData();
-            formData.append('cateogry', equipmentDetails.cateogry);
+            formData.append('category', equipmentDetails.category);
             formData.append('dailyRate', equipmentDetails.dailyRate);
             formData.append('description', equipmentDetails.description);
 
@@ -64,9 +64,9 @@ const EditEquipmentPage = () => {
                 formData.append('photo', file);
             }
 
-            const result = await ApiService.updateRoom(equipmentId, formData);
+            const result = await ApiService.updateEquipment(equipmentId, formData);
             if (result.statusCode === 200) {
-                setSuccess('Room updated successfully.');
+                setSuccess('Equipment updated successfully.');
                 
                 setTimeout(() => {
                     setSuccess('');
@@ -83,9 +83,9 @@ const EditEquipmentPage = () => {
     const handleDelete = async () => {
         if (window.confirm('Do you want to delete this equipment?')) {
             try {
-                const result = await ApiService.deleteRoom(equipmentId);
+                const result = await ApiService.deleteEquipment(equipmentId);
                 if (result.statusCode === 200) {
-                    setSuccess('Room Deleted successfully.');
+                    setSuccess('Equipment Deleted successfully.');
                     
                     setTimeout(() => {
                         setSuccess('');
@@ -101,16 +101,16 @@ const EditEquipmentPage = () => {
 
     return (
         <div className="edit-equipment-container">
-            <h2>Edit Room</h2>
+            <h2>Edit Equipment</h2>
             {error && <p className="error-message">{error}</p>}
             {success && <p className="success-message">{success}</p>}
             <div className="edit-equipment-form">
                 <div className="form-group">
                     {preview ? (
-                        <img src={preview} alt="Room Preview" className="equipment-photo-preview" />
+                        <img src={preview} alt="Equipment Preview" className="equipment-photo-preview" />
                     ) : (
                         equipmentDetails.imageUrl && (
-                            <img src={equipmentDetails.imageUrl} alt="Room" className="equipment-photo" />
+                            <img src={equipmentDetails.imageUrl} alt="Equipment" className="equipment-photo" />
                         )
                     )}
                     <input
@@ -120,16 +120,16 @@ const EditEquipmentPage = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label>Room Type</label>
+                    <label>Category</label>
                     <input
                         type="text"
-                        name="cateogry"
-                        value={equipmentDetails.cateogry}
+                        name="category"
+                        value={equipmentDetails.category}
                         onChange={handleChange}
                     />
                 </div>
                 <div className="form-group">
-                    <label>Room Price</label>
+                    <label>Daily Rate</label>
                     <input
                         type="text"
                         name="dailyRate"
@@ -138,15 +138,15 @@ const EditEquipmentPage = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label>Room Description</label>
+                    <label>Description</label>
                     <textarea
                         name="description"
                         value={equipmentDetails.description}
                         onChange={handleChange}
                     ></textarea>
                 </div>
-                <button className="update-button" onClick={handleUpdate}>Update Room</button>
-                <button className="delete-button" onClick={handleDelete}>Delete Room</button>
+                <button className="update-button" onClick={handleUpdate}>Update Equipment</button>
+                <button className="delete-button" onClick={handleDelete}>Delete Equipment</button>
             </div>
         </div>
     );

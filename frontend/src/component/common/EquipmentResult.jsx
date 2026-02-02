@@ -14,7 +14,7 @@ const EquipmentResult = ({ equipmentSearchResults }) => {
                             <img className='equipment-list-item-image' src={equipment.imageUrl} alt={equipment.category} />
                             <div className="equipment-details">
                                 <h3>{equipment.category}</h3>
-                                <p>Price: ${equipment.dailyRate} / night</p>
+                                <p>Price: ${equipment.dailyRate} / day (AUD)</p>
                                 <p>Description: {equipment.description}</p>
                             </div>
 

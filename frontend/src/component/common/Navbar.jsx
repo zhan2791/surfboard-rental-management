@@ -31,8 +31,8 @@ function Navbar() {
     const renderNavLinks = () => (
         <>
             <li><NavLink to="/home" className={navLinkClass} onClick={() => setIsOpen(false)}>Home</NavLink></li>
-            <li><NavLink to="/equipments" className={navLinkClass} onClick={() => setIsOpen(false)}>Equipments</NavLink></li>
-            <li><NavLink to="/find-rental" className={navLinkClass} onClick={() => setIsOpen(false)}>My Rentals</NavLink></li>
+            <li><NavLink to={isAdmin ? "/admin/manage-equipments" : "/equipments"} className={navLinkClass} onClick={() => setIsOpen(false)}>Equipments</NavLink></li>
+            {isUser && <li><NavLink to="/find-rental" className={navLinkClass} onClick={() => setIsOpen(false)}>My Rentals</NavLink></li>}
 
             {isUser && <li><NavLink to="/profile" className={navLinkClass} onClick={() => setIsOpen(false)}>Profile</NavLink></li>}
             {isAdmin && <li><NavLink to="/admin" className={navLinkClass} onClick={() => setIsOpen(false)}>Admin</NavLink></li>}

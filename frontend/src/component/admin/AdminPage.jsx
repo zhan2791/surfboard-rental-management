@@ -23,11 +23,11 @@ const AdminPage = () => {
         <div className="admin-page">
             <h1 className="welcome-message">Welcome, {adminName}</h1>
             <div className="admin-actions">
-                <button className="admin-button" onClick={() => navigate('/admin/manage-rooms')}>
-                    Manage Rooms
+                <button className="admin-button" onClick={() => navigate('/admin/manage-equipments')}>
+                    Manage Equipments
                 </button>
-                <button className="admin-button" onClick={() => navigate('/admin/manage-bookings')}>
-                    Manage Bookings
+                <button className="admin-button" onClick={() => navigate('/admin/manage-rentals')}>
+                    Manage Rentals
                 </button>
             </div>
         </div>
