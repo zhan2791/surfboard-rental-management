@@ -119,6 +119,17 @@ const AddEquipmentPage = () => {
                 </div>
 
                 <div className="form-group">
+                    <label>Equipment Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={equipmentDetails.name}
+                        onChange={handleChange}
+                        placeholder="e.g. Soft Top Beginner 8ft"
+                        />
+                </div>
+
+                <div className="form-group">
                     <label>Category</label>
                     <select value={equipmentDetails.category} onChange={handleCategoryChange}>
                         <option value="">Select an equipment type</option>
@@ -138,12 +149,15 @@ const AddEquipmentPage = () => {
                     )}
                 </div>
                 <div className="form-group">
-                    <label> Dailyrate </label>
+                    <label> Daily Rate </label>
                     <input
                         type="text"
                         name="dailyRate"
                         value={equipmentDetails.dailyRate}
                         onChange={handleChange}
+                        placeholder="e.g. 20"
+                        min="0"
+                        step="0.01"
                     />
                 </div>
                 <div className="form-group">
