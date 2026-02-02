@@ -71,7 +71,6 @@ const ManageRentalsPage = () => {
                         <p><strong>Rental Code:</strong> {rental.rentalConfirmationCode}</p>
                         <p><strong>Check In Date:</strong> {rental.checkInDate}</p>
                         <p><strong>Check out Date:</strong> {rental.checkOutDate}</p>
-                        <p><strong>Total Guests:</strong> {rental.totalNumOfGuest}</p>
                         <button
                             className="edit-equipment-button"
                             onClick={() => navigate(`/admin/edit-rental/${rental.rentalConfirmationCode}`)}
