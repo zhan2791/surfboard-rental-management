@@ -28,6 +28,8 @@ A full-stack web application designed for managing surfboard and diving equipmen
 * **Backend**: Docker container deployment via Render
 * **Version Control**: GitHub
 
+> Note: The backend runs on Render Free Tier, so the first request after inactivity may take ~30–60 seconds due to cold start. The login page includes a warm-up request to reduce perceived delay.
+
 ## Key Features
 
 * **Authentication**: Secure user registration and login system implementing JWT standards.
