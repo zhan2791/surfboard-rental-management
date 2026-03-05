@@ -1,5 +1,32 @@
 import axios from "axios"
 
+const api = axios.create({
+    baseURL: "https://surfboard-rental-management.onrender.com",
+    timeout: 15000, // 15s
+});
+
+/* retry helper (handle Render cold start) */
+async function withRetry(fn, { retries = 2, delays = [1500, 3000] } = {}) {
+    let lastErr;
+
+    for (let i = 0; i <= retries; i++) {
+        try {
+            return await fn();
+        } catch (err) {
+            lastErr = err;
+
+            if (i === retries) break;
+
+            await new Promise((r) =>
+                setTimeout(r, delays[i] ?? delays[delays.length - 1])
+            );
+        }
+    }
+
+    throw lastErr;
+}
+
+
 export default class ApiService {
 
     static BASE_URL = "https://surfboard-rental-management.onrender.com"
@@ -83,25 +110,50 @@ export default class ApiService {
     }
 
     /* This  gets all availavle equipments */
-    static async getAllAvailableEquipments() {
-        const result = await axios.get(`${this.BASE_URL}/equipments/all-available-equipments`)
-        return result.data
+    // static async getAllAvailableEquipments() {
+    //     const result = await axios.get(`${this.BASE_URL}/equipments/all-available-equipments`)
+    //     return result.data
+    // }
+
+    static async getAllAvailableEquipments(){
+        const result = await withRetry(() =>
+            api.get(`/equipments/all-available-equipments`),
+            {retries: 2, delays: [1500, 3000]}
+        );
+            return result.data;
     }
 
 
     /* This gets all available by dates equipments from the database with a given date and an equipment type */
-    static async getAvailableEquipmentByDateAndType(checkInDate, checkOutDate, category) {
-        const result = await axios.get(
-            `${this.BASE_URL}/equipments/available-equipments-by-date-and-type?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&category=${category}`
-        )
-        return result.data
+    // static async getAvailableEquipmentByDateAndType(checkInDate, checkOutDate, category) {
+    //     const result = await axios.get(
+    //         `${this.BASE_URL}/equipments/available-equipments-by-date-and-type?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&category=${category}`
+    //     )
+    //     return result.data
+    // }
+
+    static async getAvailableEquipmentByDateAndType(checkInDate, checkOutDate, category){
+        const result = await withRetry(() =>
+            api.get(`/equipments/available-equipments-by-date-and-type?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&category=${category}`),
+            {retries: 2, delays: [1500, 3000]}
+        );
+        return result.data;
     }
 
     /* This gets all categories from the database */
+    // static async getCategories() {
+    //     const response = await axios.get(`${this.BASE_URL}/equipments/categories`)
+    //     return response.data
+    // }
+    //use withRetry
     static async getCategories() {
-        const response = await axios.get(`${this.BASE_URL}/equipments/categories`)
-        return response.data
+        const response = await withRetry(() =>
+            api.get(`/equipments/categories`)
+        );
+
+        return response.data;
     }
+
     /* This gets all equipments from the database */
     static async getAllEquipments() {
         const result = await axios.get(`${this.BASE_URL}/equipments/all`)
